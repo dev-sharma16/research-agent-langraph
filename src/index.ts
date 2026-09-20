@@ -7,7 +7,7 @@ import qAndAGraph from "./graph/qAnda.ts";
 
 
 const result = await qAndAGraph.invoke({
-  question: "Hello Langraph",
+  question: "can you explain mwe the difference between js and ts in two lines",
 });
 
 console.log(result); 
