@@ -7,7 +7,13 @@ export const ResearchState = Annotation.Root({
   searchQueries: Annotation<string[]>,
   searchResults: Annotation<string[]>,
   documents: Annotation<string[]>,
-  findings: Annotation<string[]>,
+  findings: Annotation<string[]>({
+    reducer: (existing, update) => [
+      ...existing,
+      ... update,
+    ],
+    default: () => [],
+  }),
   sources: Annotation<string[]>,
   draft: Annotation<string>,
   finalReport: Annotation<string>,
