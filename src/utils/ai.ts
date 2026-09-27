@@ -2,15 +2,23 @@ import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
 import { gemKey } from "../config/env.ts";
 import { ResearchPlanSchema } from "../schemas/research-plan.ts";
 import { ResearchPlan } from "../schemas/research-plan.ts"
+import { calculatorTool } from "../tools/index.ts";
 
-const model = new ChatGoogleGenerativeAI({
+export const model = new ChatGoogleGenerativeAI({
   model: "gemini-3.1-flash-lite",
   apiKey: gemKey,
 });
 
+export const toolModel = model.bindTools([calculatorTool]);
+
 async function generateText(text: string): Promise<string> { 
   const response = await model.invoke(text); 
   return response.content.toString(); 
+}
+
+async function generateWithTool(text: string) {
+  const response = await toolModel.invoke(text);
+  return response;
 }
 
 async function generatePlan(text: string): Promise<ResearchPlan> {
@@ -38,4 +46,4 @@ async function generatePlan(text: string): Promise<ResearchPlan> {
   return response;
 }
 
-export { generateText, generatePlan };
+export { generateText, generateWithTool, generatePlan };
